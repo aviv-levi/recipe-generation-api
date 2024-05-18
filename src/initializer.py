@@ -3,6 +3,8 @@ import datasets
 from src.base.facade import Facade
 import faiss
 from transformers import DPRContextEncoderTokenizer, DPRContextEncoder, BartTokenizer, BartForConditionalGeneration
+from src.base.stages import RetrievalStage, GenerativeStage
+
 
 class Initializer:
 
@@ -25,6 +27,8 @@ class Initializer:
         bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
         bart_model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
 
-        return Facade(recipes=recipes, vector_db=vector_db, tokenizer=tokenizer, model=model,
-                      bart_tokenizer=bart_tokenizer, bart_model=bart_model)
+        retrieval_stage = RetrievalStage(tokenizer=tokenizer, model=model, vector_db=vector_db, recipes=recipes)
+        generative_stage = GenerativeStage(bart_tokenizer=bart_tokenizer, bart_model=bart_model)
+
+        return Facade(retrieval_stage=retrieval_stage, generative_stage=generative_stage)
 
