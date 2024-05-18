@@ -8,5 +8,5 @@ class IStage(ABC):
         pass
 
     @abstractmethod
-    def run(self):
+    def run(self, data):
         pass
