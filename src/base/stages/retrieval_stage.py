@@ -1,5 +1,4 @@
-from transformers import DPRContextEncoderTokenizer, DPRContextEncoder
-from src.base.base_stage import BaseStage
+from src.base.stages.base_stage import BaseStage
 
 __all__ = ['RetrievalStage']
 
@@ -19,8 +18,8 @@ class RetrievalStage(BaseStage):
         embeddings = self._model(**inputs).pooler_output
         return embeddings.detach().numpy()
 
-    def run(self, data):
-        query_embedding = self._encode_query(query=data)
+    def run(self, query):
+        query_embedding = self._encode_query(query=query)
         vectors_distances, vectors_indices = self._vector_db.search(query_embedding, self._k)
         relevant_recipes = [self._recipes[i] for i in vectors_indices[0]]
-        super().run(relevant_recipes)
+        return super().run((relevant_recipes, query))

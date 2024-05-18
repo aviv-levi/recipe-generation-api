@@ -13,4 +13,5 @@ class BaseStage(IStage):
     def run(self, data):
         if self._next_stage:
             return self._next_stage.run(data)
+        return data
 
