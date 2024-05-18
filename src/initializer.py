@@ -5,6 +5,8 @@ import faiss
 from transformers import DPRContextEncoderTokenizer, DPRContextEncoder, BartTokenizer, BartForConditionalGeneration
 from src.base.stages import RetrievalStage, GenerativeStage
 
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 
 class Initializer:
 
@@ -31,5 +33,4 @@ class Initializer:
         generative_stage = GenerativeStage(bart_tokenizer=bart_tokenizer, bart_model=bart_model)
         retrieval_stage.connect_next(generative_stage)
 
-        return Facade(retrieval_stage=retrieval_stage, generative_stage=generative_stage)
-
+        return Facade(stage=retrieval_stage)
