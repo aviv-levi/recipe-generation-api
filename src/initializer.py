@@ -29,6 +29,7 @@ class Initializer:
 
         retrieval_stage = RetrievalStage(tokenizer=tokenizer, model=model, vector_db=vector_db, recipes=recipes)
         generative_stage = GenerativeStage(bart_tokenizer=bart_tokenizer, bart_model=bart_model)
+        retrieval_stage.connect_next(generative_stage)
 
         return Facade(retrieval_stage=retrieval_stage, generative_stage=generative_stage)
 
