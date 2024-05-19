@@ -1,0 +1,7 @@
+transformers
+datasets
+faiss-cpu
+torch
+ipykernel
+Flask
+flasgger
