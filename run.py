@@ -4,7 +4,6 @@ from src.initializer import Initializer
 
 
 app = Flask(__name__)
-app.config.from_object('config.ProductionConfig')
 Swagger(app, template={
     "info": {
         "title": "Recipe Recommendation API",
