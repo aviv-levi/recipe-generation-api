@@ -1,5 +1,5 @@
 # Recipe Generation API with RAG Model
-![Project Logo](media/menu.png)
+![Project Logo](media/menu.PNG)
 ## Explanation
 This project is a Recipe Generation API that utilizes a Retrieval-Augmented Generation (RAG) model to generate detailed recipes based on user input. The API allows users to input a desired recipe idea (e.g., "pancakes recipe") and returns a complete recipe by querying a vector database (faiss), retrieving relevant information, and processing it through a BART model.
 
