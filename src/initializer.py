@@ -1,9 +1,9 @@
 import os
 import datasets
-from src.base.facade import Facade
 import faiss
 from transformers import DPRContextEncoderTokenizer, DPRContextEncoder, BartTokenizer, BartForConditionalGeneration
 from src.base.stages import RetrievalStage, GenerativeStage
+from src.core.stage import IStage
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -21,7 +21,7 @@ class Initializer:
         recipes = [entry['steps'] for entry in dataset['train']]
         return recipes
 
-    def initialize(self) -> Facade:
+    def initialize(self) -> IStage:
         recipes = self.initialize_recipes()
         vector_db = self.initialize_vector_db()
         tokenizer = DPRContextEncoderTokenizer.from_pretrained('facebook/dpr-ctx_encoder-multiset-base')
@@ -33,4 +33,4 @@ class Initializer:
         generative_stage = GenerativeStage(bart_tokenizer=bart_tokenizer, bart_model=bart_model)
         retrieval_stage.connect_next(generative_stage)
 
-        return Facade(stage=retrieval_stage)
+        return retrieval_stage
