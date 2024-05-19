@@ -19,7 +19,9 @@ class RetrievalStage(BaseStage):
         return embeddings.detach().numpy()
 
     def run(self, query):
+        # encode desire recipe and search for top-k recipes from vector-db
         query_embedding = self._encode_query(query=query)
         vectors_distances, vectors_indices = self._vector_db.search(query_embedding, self._k)
+        # retrieve original top-k recipes
         relevant_recipes = [self._recipes[i] for i in vectors_indices[0]]
         return super().run((relevant_recipes, query))
